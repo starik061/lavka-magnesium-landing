@@ -231,6 +231,7 @@ function updateGiftLimit() {
   if (state.selectedGifts.length > limit) state.selectedGifts = state.selectedGifts.slice(0, limit);
   $$(".gift-card").forEach((card) => {
     const selected = state.selectedGifts.includes(card.dataset.gift);
+    card.disabled = limit === 0;
     card.classList.toggle("is-selected", selected);
     card.setAttribute("aria-pressed", String(selected));
     card.querySelector(".gift-check").textContent = selected ? "✓" : "+";
@@ -249,7 +250,7 @@ function selectOffer(offerId, shouldScroll = false) {
   state.selectedOffer = Number(offerId);
   state.selectedGifts = [];
   syncOfferUI();
-  if (shouldScroll) scrollToId(offers[state.selectedOffer].gifts ? "gifts" : "order");
+  if (shouldScroll) scrollToId("gifts");
   showToast(`Обрано формат ${state.selectedOffer} капсул`);
 }
 
